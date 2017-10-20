@@ -1,0 +1,21 @@
+pipeline:
+
+  publish:
+    image: plugins/docker
+    repo: uppdragshuset/automatch-api
+    username: roasten
+    password: W5f-HCL-hQM-XXb
+    tags: [ 'latest' ]
+    when:
+      event: [ push ]
+      branch: [ master ]
+
+  publish:
+    image: plugins/docker
+    repo: uppdragshuset/automatch-api
+    username: roasten
+    password: W5f-HCL-hQM-XXb
+    tags: [ '${DRONE_TAG}' ]
+    when:
+      event: [ tag ]
+      branch: [ refs/tags/* ]
