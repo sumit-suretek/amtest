@@ -5,6 +5,17 @@ pipeline:
     repo: uppdragshuset/automatch-api
     username: roasten
     password: W5f-HCL-hQM-XXb
+    tags: [ '${DRONE_BRANCH}' ]
+    when:
+      event: [ push ]
+      branch:
+        exclude: master
+        
+  publish:
+    image: plugins/docker
+    repo: uppdragshuset/automatch-api
+    username: roasten
+    password: W5f-HCL-hQM-XXb
     tags: [ 'latest' ]
     when:
       event: [ push ]
