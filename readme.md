@@ -1,3 +1,6 @@
+
+[![Build Status](http://drone.uppdragshuset.se/api/badges/uppdragshuset/automatch-api/status.svg)](http://drone.uppdragshuset.se/uppdragshuset/automatch-api)
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
