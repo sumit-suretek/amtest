@@ -64,6 +64,7 @@ class AutomatchController extends Controller
         
         $key = request()->input('query').'-'.$rows;
 
+        //  checking if requested key is already available in cache
         if (Cache::has($key)) {
             $keyval = Cache::get($key);
             if ($keyval <> '0') {
@@ -95,9 +96,15 @@ class AutomatchController extends Controller
         ));
     }
 
+
+    /**
+     * Checking for invalid view paramter
+     *
+     * @param array
+     * @throws WrongRequestParameterException
+     */
     public function viewParamValidation($viewParam)
     {
-        // Checking for invalid view paramter
 
         try {
             array_map(function ($item){
