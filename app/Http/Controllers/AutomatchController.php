@@ -25,14 +25,13 @@ class AutomatchController extends Controller
     */
     protected $imageUrl;
 
-	public function __construct()
-	{
+    public function __construct()
+    {
         $this->solrSearchUrl = config('constants.SOLR_API').'/v1/';        
         $this->docdbUrl      = config('constants.DOCDB_API').'/v1/';        
         $this->imageUrl      = config('constants.IMAGE_API').'/v1/';
-
-        $this->client = new Client();
-	}
+        $this->client        = new Client();
+    }
 
     /**
      * Request search query 
