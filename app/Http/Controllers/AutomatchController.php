@@ -13,17 +13,17 @@ class AutomatchController extends Controller
 	/**
      * @var solrSearchUrl
     */
-    public $solrSearchUrl;
+    protected $solrSearchUrl;
 
     /**
      * @var docdbUrl
     */
-    public $docdbUrl;
+    protected $docdbUrl;
 
     /**
      * @var imageUrl
     */
-    public $imageUrl;
+    protected $imageUrl;
 
 	public function __construct()
 	{
@@ -100,7 +100,7 @@ class AutomatchController extends Controller
             "data" => null],202);
     }
 
-    public function viewParamValidation($viewParam)
+    private function viewParamValidation($viewParam)
     {
         // Checking for invalid view paramter
 
@@ -156,7 +156,7 @@ class AutomatchController extends Controller
      * @throws WrongRequestParameterException
      * @return object
      */
-    public function docdbSearchRequest($patentId)
+    private function docdbSearchRequest($patentId)
     {   
         // Fetching Bibliographic Data
         $bibliographic = $this->bibliographicSearchRequest($patentId);
@@ -183,7 +183,7 @@ class AutomatchController extends Controller
      * @throws WrongRequestParameterException
      * @return object
      */
-    public function bibliographicSearchRequest($patentId)
+    private function bibliographicSearchRequest($patentId)
     {
         try {
             $url = $this->docdbUrl .'getBibliographic/'.$patentId;
@@ -207,7 +207,7 @@ class AutomatchController extends Controller
      * @throws WrongRequestParameterException
      * @return object
      */
-    public function claimAndDescriptionSearchRequest($patentId)
+    private function claimAndDescriptionSearchRequest($patentId)
     {
         try {
             $url = $this->docdbUrl .'getClaimAndDescription/'.$patentId;
@@ -238,7 +238,7 @@ class AutomatchController extends Controller
      * @param $patentId
      * @return object
      */
-    public function imageResponseRequest($patentId)
+    private function imageResponseRequest($patentId)
     {
         try {
             $url = $this->imageUrl .'getImage/'.$patentId;
@@ -264,7 +264,7 @@ class AutomatchController extends Controller
      * @param $response
      * @return object
      */
-    public function transformSolrSearchData($response)
+    private function transformSolrSearchData($response)
     {
         unset($response->status);
         unset($response->message);
@@ -314,7 +314,7 @@ class AutomatchController extends Controller
      * @throws WrongRequestParameterException
      * @return object
      */
-    public function transformDocdbData($bibliographRes)
+    private function transformDocdbData($bibliographRes)
     {
         unset($bibliographRes->status);
         unset($bibliographRes->message);
