@@ -55,6 +55,14 @@ class AutomatchController extends Controller
             throw new WrongRequestParameterException("Query parameter should not be blank.");
         }
 
+        if (empty(request()->input('reference_number'))) {
+            throw new WrongRequestParameterException("Reference Number should not be blank.");
+        }
+
+        if (strlen(trim(request()->input('reference_number'))) > 100) {
+            throw new WrongRequestParameterException("Reference Number size should not be greater than 100.");
+        }
+
         // checking for view parameters  
 
         if (!empty(request()->input('view'))) {
@@ -64,12 +72,11 @@ class AutomatchController extends Controller
         
         $key = request()->input('query').'-'.$rows;
 
-        //  checking if requested key is already available in cache
         if (Cache::has($key)) {
             $keyval = Cache::get($key);
             if ($keyval <> '0') {
                 if (!isset($viewParameters)) {
-                    return $keyval;
+                    return response($keyval,200)->header('X-Reference-Number',request()->input('reference_number'));
                 } else {
                     $viewAllParameter = array('bibliographic', 'claim', 'description', 'image');
                     $removeArr = array_diff($viewAllParameter, $viewParameters);
@@ -80,7 +87,7 @@ class AutomatchController extends Controller
                         }
                         $data['automatch_results'][] = $value;
                     }
-                    return response()->resource_fetched($data);
+                    return response()->resource_fetched($data)->header('X-Reference-Number',request()->input('reference_number'));
                     
                 }
             }
@@ -88,23 +95,14 @@ class AutomatchController extends Controller
             Cache::put($key,'0',1);
             dispatch(new RequestMaker(request()->input('query'), $rows, $key, request()->input('view')));
         }
-
-        return json_encode(array(
-            "status" => "success",
-            "message" => "Processing",
-            "data" => null
-        ));
+       
+        return response()->json(["status" => "success","message" => "Processing",
+            "data" => null],202);
     }
 
-
-    /**
-     * Checking for invalid view paramter
-     *
-     * @param array
-     * @throws WrongRequestParameterException
-     */
     public function viewParamValidation($viewParam)
     {
+        // Checking for invalid view paramter
 
         try {
             array_map(function ($item){
