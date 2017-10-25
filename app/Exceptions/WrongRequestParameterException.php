@@ -10,7 +10,7 @@ class WrongRequestParameterException extends \Exception {
     /**
      * @var int
      */
-    protected $code = 401;
+    protected $code = 403;
 
     /**
      * @var string
