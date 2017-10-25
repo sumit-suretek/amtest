@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group([
-	'prefix'		=>	'v2'
-], function(){
+Route::group(['prefix'=>'v2'], function(){
 	Route::post('search', 'AutomatchController@search');
-	Route::post('makeSearchRequest', 'AutomatchController@makeSearchRequest');
-	
 });
