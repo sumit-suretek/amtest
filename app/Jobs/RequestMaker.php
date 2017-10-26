@@ -35,9 +35,8 @@ class RequestMaker implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(AutomatchController $obj)
     {
-        $obj  = new AutomatchController();
         $searchdata = $obj->makeSearchRequest($this->query, $this->rows);
         Cache::put($this->key,$searchdata,15);
     }
