@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\WrongRequestParameterException;
 use App\Jobs\RequestMaker;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -25,12 +25,12 @@ class AutomatchController extends Controller
     */
     protected $imageUrl;
 
-    public function __construct()
+    public function __construct(Client $client)
     {
         $this->solrSearchUrl = config('constants.SOLR_API').'/v1/';        
         $this->docdbUrl      = config('constants.DOCDB_API').'/v1/';        
         $this->imageUrl      = config('constants.IMAGE_API').'/v1/';
-        $this->client        = new Client();
+        $this->client        = $client;
     }
 
     /**
